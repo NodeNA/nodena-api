@@ -1,0 +1,65 @@
+{
+  "site": {
+    "name": "NodeNA",
+    "title": "Welcome to NodeNA, a Node.js information portal for developers in Namibia",
+    "description": "NodeNA is a platform that aims to make it easy to find information about Node.js, learn, and connect with other Node users in Namibia",
+    "keywords": "node, node.js, events, tutorials, jobs, companies, news, Namibia, meetups",
+    "baseUrl": "",
+    "cache": true,
+    "maxAge": 7,
+    "port": 3000
+  },
+  "db": {
+    "production": {
+      "client": "mysql",
+      "connection": {
+        "host": "localhost",
+        "db": "",
+        "user": "",
+        "password": "",
+        "charset": "utf8"
+      },
+      "useNullAsDefault": true
+    },
+    "staging": {
+      "client": "mysql",
+      "connection": {
+        "host": "localhost",
+        "db": "",
+        "user": "",
+        "password": "",
+        "charset": "utf8"
+      },
+      "useNullAsDefault": true
+    },
+    "development": {
+      "client": "sqlite3",
+      "connection": {
+        "filename": "./development.sqlite"
+      },
+      "useNullAsDefault": true
+    }
+  },
+  "mailgun": {
+    "login": "",
+    "password": ""
+  },
+  "github": {
+    "clientID": "",
+    "clientSecret": "",
+    "callbackURL": "/auth/github/callback",
+    "passReqToCallback": true
+  },
+  "twitter": {
+    "consumerKey": "",
+    "consumerSecret": "",
+    "callbackURL": "/auth/twitter/callback",
+    "passReqToCallback": true
+  },
+  "google": {
+    "clientID": "",
+    "clientSecret": "",
+    "callbackURL": "/auth/google/callback",
+    "passReqToCallback": true
+  }
+}

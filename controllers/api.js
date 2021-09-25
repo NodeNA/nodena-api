@@ -1,0 +1,138 @@
+"use strict";
+
+const App = require('widget-cms');
+const mailGun = require('../lib/mailgun');
+const RSS = require('rss');
+const redis = require('redis');
+const Queue = redis.createClient();
+
+
+const APIController = App.Controller.extend({
+
+  getRSS: function (req, res, next) {
+    let config = App.getConfig('site');
+    let Posts = App.getCollection('Posts');
+
+    config.baseUrl = config.baseUrl || 'http://' + req.headers.host;
+
+    let feed = new RSS({
+      title: config.siteName,
+      description: config.description,
+      feed_url: config.baseUrl + '/rss',
+      site_url: config.baseUrl,
+      language: 'en',
+      author: config.siteName
+    });
+
+    Posts.forge()
+    .fetchBy('published_at', {
+      page: 1,
+      limit: config.rssLimit
+    }, {
+      columns: ['id', 'slug', 'title', 'user_id', 'meta_description', 'published_at'],
+      withRelated: ['created_by']
+    })
+    .then(function (collection) {
+
+      collection.forEach(function (post) {
+        feed.item({
+          guid: post.get('id'),
+          title: post.get('title'),
+          description: post.get('meta_description'),
+          url: config.baseUrl + '/blog/' + post.get('slug'),
+          author: post.related('created_by').get('name'),
+          date: post.get('published_at')
+        });
+      });
+
+      res.end(feed.xml());
+    })
+    .catch(function (error) {
+      next(error);
+    });
+  },
+
+
+  postSubscribe: function (req, res) {
+    let to = {
+      name: req.body.name,
+      email: req.body.email
+    };
+
+    Queue.publish('email', JSON.stringify({
+      type: 'subscribe',
+      to: to
+    }));
+
+    res.end('Success!');
+  },
+
+
+  getConfirmSubscription: function (req, res) {
+    let to = {
+      email: req.params.email,
+      subscribed: 'yes'
+    };
+
+    Queue.publish('email', JSON.stringify({
+      type: 'subscription-confirm',
+      to: to
+    }));
+
+    req.flash('success',  {msg: 'You have successfully subscribed to our website'});
+    res.redirect('/');
+  },
+
+
+  unSubscribe: function (req, res) {
+    let opts = {
+      email: req.params.email,
+      subscribed: 'no',
+      host: req.headers.host
+    };
+
+    mailGun.confirmSubscription(opts, function (error, message) {
+      if (error) {
+        console.error(error);
+        req.flash('errors',  { msg: 'An error occured, please try again or contact us :('});
+        return res.redirect('/');
+      }
+
+      req.flash('success',  {msg: 'You have successfully unsubscribed'});
+      res.redirect('/');
+    });
+  },
+
+  postContact: function(req, res, next) {
+    req.assert('name', 'Name must be at least 3 characters long').len(3);
+    req.assert('email', 'Not a valid email').isEmail();
+    req.assert('message', 'Message must be at least 12 characters long').len(12);
+
+    var errors = req.validationErrors();
+
+    if (errors) {
+      req.flash('errors', errors);
+      return res.redirect('back');
+    }
+
+    var mailOptions = {
+      to: req.body._email,
+      from: req.body.name + ' <' + req.body.email + '>',
+      subject: req.body.subject,
+      body: req.body.message
+    };
+
+    mailGun.sendEmail(mailOptions)
+    .then(function (data) {
+      req.flash('success', {msg: 'Your message has been successfully sent.'});
+      res.redirect('back');
+    })
+    .catch(function (error) {
+      console.error(error);
+      req.flash('error', {msg: 'An error occured. Message not sent.'});
+      next(error);
+    });
+  }
+});
+
+module.exports = App.addController('Api', APIController);
