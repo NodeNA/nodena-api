@@ -1,6 +1,6 @@
-const App = require('widget-cms');
-const auth = require('../lib/auth');
-const passport = App.passport;
+import { passport as _passport, get } from '../core';
+
+const passport = _passport;
 
 
 function authCallback(req, res, next) {
@@ -9,9 +9,10 @@ function authCallback(req, res, next) {
 }
 
 
-App.get('/auth/github', passport.authenticate('github'), function(req, res, next) {
+get('/auth/github', passport.authenticate('github'), function(req, res, next) {
   if (res.locals.isNewAccount) return res.redirect('/admin/account/password');
-
   res.redirect('/admin/account');
 });
-App.get('/auth/github/callback', passport.authenticate('github', { failureRedirect: '/login' }), authCallback);
+
+
+get('/auth/github/callback', passport.authenticate('github', { failureRedirect: '/login' }), authCallback);

@@ -1,11 +1,13 @@
-const GitHubStrategy = require('passport-github').Strategy;
-const App = require('widget-cms');
-const passport = App.passport;
-const User = App.getModel('User');
-const Tokens = App.getCollection('Tokens');
-const Token = App.getModel('Token');
-const config = App.getConfig('github');
-const githubConfig = App.getConfig('github');
+import { Strategy as GitHubStrategy } from 'passport-github';
+import { passport as _passport, getModel, getCollection, getConfig } from '../core';
+
+
+const passport = _passport;
+const User = getModel('User');
+const Tokens = getCollection('Tokens');
+const Token = getModel('Token');
+const config = getConfig('github');
+const githubConfig = getConfig('github');
 
 
 passport.deserializeUser(async function(id, done) {
@@ -132,26 +134,26 @@ passport.use(new GitHubStrategy(githubConfig, async function (req, accessToken, 
 
 
 // Login Required middleware.
-module.exports.isAuthenticated = function (req, res, next) {
+export function isAuthenticated (req, res, next) {
   if (req.isAuthenticated()) return next();
 
   req.flash('errors',  { msg: 'You need to log in first.'});
 
   res.redirect('/login');
-};
+}
 
 
-module.exports.isNotAuthenticated = function (req, res, next) {
+export function isNotAuthenticated (req, res, next) {
   if (!req.isAuthenticated()) return next();
 
   res.redirect('/');
-};
+}
 
 
 /*
  * Authorization Required middleware.
 **/
-module.exports.isAuthorized = function (req, res, next) {
+export function isAuthorized (req, res, next) {
   let provider = req.path.split('/').slice(-1)[0];
   let tokens = req.user.related('tokens');
 
@@ -161,10 +163,10 @@ module.exports.isAuthorized = function (req, res, next) {
   else {
     res.redirect('/auth/' + provider);
   }
-};
+}
 
 
-module.exports.isUserAdmin = function (req, res, next) {
+export function isUserAdmin (req, res, next) {
   if (req.user && req.user.related('role').get('name') === 'Super Administrator') {
     next();
   }
@@ -172,4 +174,4 @@ module.exports.isUserAdmin = function (req, res, next) {
     req.flash('errors', { msg: 'You are not authorized to perform that action' });
     res.redirect('back');
   }
-};
+}

@@ -1,5 +1,4 @@
-const App = require('widget-cms');
-const TagsController = App.getController('Tags');
+import { getController, get } from '../core';
+const TagsController = getController('Tags');
 
-
-App.get('/blog/tags/:slug', TagsController.getPosts);
+get('/blog/tags/:slug', TagsController.getPosts);

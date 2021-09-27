@@ -1,14 +1,14 @@
 /**
  * Module dependencies.
 **/
-const App = require('widget-cms');
-const bcrypt = require('bcrypt-nodejs');
-const crypto = require('crypto');
-const Promise = require('bluebird');
-const _ = require('lodash');
+import { Model, getCollection, addModel } from '../core';
+import { genSalt, hash as _hash, compare } from 'bcrypt-nodejs';
+import { createHash } from 'crypto';
+import Promise, { resolve as _resolve } from 'bluebird';
+import { find } from 'lodash';
 
 
-const User = App.Model.extend({
+const User = Model.extend({
 
   tableName: 'users',
 
@@ -36,12 +36,12 @@ const User = App.Model.extend({
 
   generatePasswordHash: function (password) {
     return new Promise(function(resolve, reject) {
-      bcrypt.genSalt(5, function(err, salt) {
+      genSalt(5, function(err, salt) {
         if (err) {
           return reject(err);
         }
 
-        bcrypt.hash(password, salt, null, function(err, hash) {
+        _hash(password, salt, null, function(err, hash) {
           if (err) {
             return reject(err);
           }
@@ -57,7 +57,7 @@ const User = App.Model.extend({
     let password = this.get('password');
 
     return new Promise(function(resolve, reject) {
-      bcrypt.compare(candidatePassword, password, function(err, isMatch) {
+      compare(candidatePassword, password, function(err, isMatch) {
         if (err) {
           reject(err);
         }
@@ -77,7 +77,7 @@ const User = App.Model.extend({
       return `https://gravatar.com/avatar/?s=${size}&d=${defaults}`;
     }
 
-    let md5 = crypto.createHash('md5').update(this.get('email'));
+    let md5 = createHash('md5').update(this.get('email'));
 
     return `https://gravatar.com/avatar/${md5.digest('hex').toString()}?s=${size}&d=${defaults}`;
   },
@@ -161,8 +161,8 @@ const User = App.Model.extend({
    */
   unlink: function(provider) {
     let tokens = this.related('tokens').toJSON();
-    let token = _.find(tokens, {kind: provider});
-    let Tokens = App.getCollection('Tokens');
+    let token = find(tokens, {kind: provider});
+    let Tokens = getCollection('Tokens');
 
     if (token) {
       if (token.kind === 'github') {
@@ -183,21 +183,10 @@ const User = App.Model.extend({
       });
     }
     else {
-      return Promise.resolve('Token not found');
+      return _resolve('Token not found');
     }
   },
 
-
-  viewed: function () {
-    let views = this.get('views') || 0;
-
-    return this.save({'views': views + 1}, {patch: true});
-  },
-
-
-  unreadmessages: function () {
-    return this.hasMany('Message','to_id').query('where', 'read', '=', 0);
-  }
 });
 
-module.exports = App.addModel('User', User);
+export default addModel('User', User);

@@ -1,26 +1,26 @@
-const gulp = require('gulp');
-const imagemin = require('gulp-imagemin');
-const imageResize = require('gulp-image-resize');
+import { src, dest } from 'gulp';
+import imagemin from 'gulp-imagemin';
+import imageResize from 'gulp-image-resize';
 
 
 function handleImg (filename) {
- return gulp.src(filename)
+ return src(filename)
   .pipe(imagemin({optimizationLevel: 5}))
-  .pipe(gulp.dest('./public/img'))
+  .pipe(dest('./public/img'))
   .pipe(imageResize({
     width : 300,
     height : 200,
     crop : true,
     upscale : false
   }))
-  .pipe(gulp.dest('./public/img/320'))
+  .pipe(dest('./public/img/320'))
 
   .pipe(imageResize({
     width : 120,
     crop : false,
     upscale : false
   }))
-  .pipe(gulp.dest('./public/img/120'))
+  .pipe(dest('./public/img/120'))
 
   .pipe(imageResize({
     width : 48,
@@ -28,7 +28,7 @@ function handleImg (filename) {
     crop : true,
     upscale : false
   }))
-  .pipe(gulp.dest('./public/img/48'));
+  .pipe(dest('./public/img/48'));
 }
 
 
@@ -45,4 +45,3 @@ process.on('message', function (images) {
   });
 });
 
-module.exports = {};

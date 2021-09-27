@@ -1,11 +1,9 @@
-const App = require('widget-cms');
-const RolesController = App.getController('Roles');
-const auth = require('../lib/auth');
+import { getController, get, post } from '../core';
+import { isUserAdmin } from '../utils/auth.js';
 
+const RolesController = getController('Roles');
 
-App.get('/admin/users/roles', auth.isUserAdmin, RolesController.getRoles);
-App.get('/roles/edit/:id', auth.isUserAdmin, RolesController.getEditRole);
-App.post('/roles/edit', auth.isUserAdmin, RolesController.postEditRole);
-App.get('/roles/new', auth.isUserAdmin, RolesController.getNewRole);
-App.post('/roles/new', auth.isUserAdmin, RolesController.postNewRole);
-App.get('/roles/delete/:id', auth.isUserAdmin, RolesController.getDeleteRole);
+get('/admin/users/roles', isUserAdmin, RolesController.getRoles);
+post('/roles/edit', isUserAdmin, RolesController.postEditRole);
+post('/roles/new', isUserAdmin, RolesController.postNewRole);
+get('/roles/delete/:id', isUserAdmin, RolesController.getDeleteRole);

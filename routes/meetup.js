@@ -1,14 +1,14 @@
-const App = require('widget-cms');
-const MeetupsController = App.getController('Meetups');
-const auth = require('../lib/auth');
+import { getController, get, post } from '../core';
+import { isAuthenticated, isUserAdmin } from '../utils/auth.js';
 
-App.get('/admin/meetups', auth.isAuthenticated, MeetupsController.getAdmin);
-App.get('/admin/meetups/settings', auth.isUserAdmin, MeetupsController.getSettings);
-App.get('/meetups/new', auth.isAuthenticated, MeetupsController.getNew);
-App.get('/meetups/edit/:id', auth.isAuthenticated, MeetupsController.getEdit);
-App.post('/meetups/new', auth.isAuthenticated, MeetupsController.postNew);
-App.post('/meetups/edit', auth.isAuthenticated, MeetupsController.postEdit);
+const MeetupsController = getController('Meetups');
 
-// public
-App.get('/meetups/:slug', MeetupsController.getMeetup);
-App.get('/meetups', MeetupsController.getMeetups);
+get('/admin/meetups', isAuthenticated, MeetupsController.getAdmin);
+get('/admin/meetups/settings', isUserAdmin, MeetupsController.getSettings);
+
+get('/meetups', MeetupsController.getMeetups);
+get('/meetups/:slug', MeetupsController.getMeetup);
+
+
+post('/meetups/new', isAuthenticated, MeetupsController.postNew);
+post('/meetups/edit', isAuthenticated, MeetupsController.postEdit);

@@ -1,15 +1,9 @@
-const App = require('widget-cms');
-const markdown = require('markdown-it')();
-const _ = require('lodash');
+import { Model, addModel } from '../core';
+import _ from 'lodash';
 
-
-const Meetup =  App.Model.extend({
-
+const Meetup =  Model.extend({
   tableName: 'meetups',
-
-
   hasTimestamps: true,
-
 
   saving: function (model, attr, options) {
 
@@ -37,4 +31,4 @@ const Meetup =  App.Model.extend({
 
 });
 
-module.exports = App.addModel('Meetup', Meetup);
+export default addModel('Meetup', Meetup);

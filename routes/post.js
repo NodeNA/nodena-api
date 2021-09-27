@@ -1,21 +1,20 @@
 
-const App = require('widget-cms');
-const PostsController = App.getController('Posts');
-const auth = require('../lib/auth');
+import { getController, get, post } from '../core';
+import { isAuthenticated, isUserAdmin } from '../utils/auth.js';
 
+const PostsController = getController('Posts');
 
 //private
-App.get('/admin/blog', auth.isAuthenticated, PostsController.getAdmin);
-App.get('/admin/blog/settings', auth.isUserAdmin, PostsController.getSettings);
-App.get('/blog/new', auth.isAuthenticated, PostsController.getNew);
-App.get('/blog/edit/:id', auth.isAuthenticated, PostsController.getEdit);
-App.get('/blog/publish/:id', auth.isAuthenticated, PostsController.getPublish);
-App.get('/blog/featured/:id', auth.isAuthenticated, PostsController.isFeatured);
-App.get('/blog/delete/:id', auth.isAuthenticated, PostsController.getDelete);
-App.post('/blog/new', auth.isAuthenticated, PostsController.postNew);
-App.post('/blog/edit', auth.isAuthenticated, PostsController.postEdit);
+get('/admin/blog', isAuthenticated, PostsController.getAdmin);
+get('/admin/blog/settings', isUserAdmin, PostsController.getSettings);
+
+get('/blog/publish/:id', isAuthenticated, PostsController.getPublish);
+get('/blog/featured/:id', isAuthenticated, PostsController.isFeatured);
+get('/blog/delete/:id', isAuthenticated, PostsController.getDelete);
+post('/blog/new', isAuthenticated, PostsController.postNew);
+post('/blog/edit', isAuthenticated, PostsController.postEdit);
 
 // public
-App.get('/blog', PostsController.getBlog);
-App.get('/blog/:slug', PostsController.getPost);
-App.get('/blog/category/:slug', PostsController.getBlogCategory);
+get('/blog', PostsController.getBlog);
+get('/blog/:slug', PostsController.getPost);
+get('/blog/category/:slug', PostsController.getBlogCategory);

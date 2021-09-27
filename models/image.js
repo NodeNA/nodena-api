@@ -1,11 +1,7 @@
-const App = require('widget-cms');
+import { Model, addModel } from '../core';
 
-
-const Image = App.Model.extend({
-
+const Image = Model.extend({
   tableName: 'images',
-
-
   hasTimestamps: true,
 
 
@@ -24,4 +20,4 @@ const Image = App.Model.extend({
 
 });
 
-module.exports = App.addModel('Image', Image);
+export default addModel('Image', Image);

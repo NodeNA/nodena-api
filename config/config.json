@@ -28,8 +28,7 @@
         "db": "",
         "user": "",
         "password": "",
-        "charset": "utf8",
-        "multipleStatements": true
+        "charset": "utf8"
       },
       "useNullAsDefault": true
     },
@@ -49,13 +48,7 @@
     "clientID": "",
     "clientSecret": "",
     "callbackURL": "/auth/github/callback",
-    "passReqToCallback": true,
-    "authorizationURL": "https://github.com/login/oauth/authorize",
-    "tokenURL": "https://github.com/login/oauth/access_token",
-    "scopeSeparator": ",",
-    "customHeaders": {
-      "User-Agent": "passport-github"
-    }
+    "passReqToCallback": true
   },
   "twitter": {
     "consumerKey": "",

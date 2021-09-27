@@ -1,9 +1,9 @@
-const App = require('widget-cms');
-const AdminController = App.getController('Admin');
-const auth = require('../lib/auth');
+import { getController, get, post } from '../core';
+import { isAuthenticated, isUserAdmin } from '../utils/auth.js';
+const AdminController = getController('Admin');
 
 
-App.get('/admin', auth.isAuthenticated, AdminController.getAdmin);
-App.post('/admin/config', auth.isUserAdmin, AdminController.postConfig);
-App.get('/admin/settings', auth.isUserAdmin, AdminController.getGlobalConfig);
-App.get('/admin/settings/account', auth.isUserAdmin, AdminController.getAccountConfig);
+get('/admin', isAuthenticated, AdminController.getAdmin);
+post('/admin/config', isUserAdmin, AdminController.postConfig);
+get('/admin/settings', isUserAdmin, AdminController.getGlobalConfig);
+get('/admin/settings/account', isUserAdmin, AdminController.getAccountConfig);

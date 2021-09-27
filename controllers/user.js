@@ -43,45 +43,6 @@ const UsersController = App.Controller.extend({
 
 
   /*
-   * GET /admin/users/new
-   * Load new user form
-  **/
-  getNewUser: function (req, res, next) {
-    res.render('users/new', {
-      title: 'New User',
-      description: 'New User',
-      page: 'newuser'
-    });
-  },
-
-
-  /*
-   * GET /users/edit/:id
-   * Load user edit form
-  **/
-  getEditUser: async function (req, res, next) {
-    try {
-      let Roles = App.getCollection('Roles');
-      let User = App.getModel('User');
-
-      let roles = await Roles.forge().fetch();
-      let user = await User.forge({id: req.params.id}).fetch({withRelated: ['role']});
-
-      res.render('users/edit', {
-        title: 'Edit User',
-        description: 'Edit User',
-        usr: user.toJSON(),
-        roles: roles.toJSON(),
-        page: 'edituser'
-      });
-    }
-    catch (error) {
-      req.flash('errors', {'msg': error.message});
-      res.redirect('/admin/users');
-    }
-  },
-
-
 
   /**
    * GET /devs

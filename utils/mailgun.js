@@ -1,9 +1,9 @@
-const Promise = require('bluebird');
-const Mailgun = require('mailgun-js');
-const config = require('../config');
-const apiKey = config.mailgun.apiKey;
-const domain = config.mailgun.domain;
-const from_who = 'NodeNA <' + config.mailgun.email + '>';
+import Promise from 'bluebird';
+import Mailgun from 'mailgun-js';
+import { mailgun as _mailgun } from '../config';
+const apiKey = _mailgun.apiKey;
+const domain = _mailgun.domain;
+const from_who = 'NodeNA <' + _mailgun.email + '>';
 
 
 function sendEmail (opts) {
@@ -45,7 +45,7 @@ function subscribe (opts) {
   }
 
   let mailgun = new Mailgun({apiKey: apiKey, domain: domain});
-  let newsletterList = mailgun.lists(config.mailgun.newsletterEmail);
+  let newsletterList = mailgun.lists(_mailgun.newsletterEmail);
   let member = {
     address: opts.to.email,
     name: opts.to.name,
@@ -71,7 +71,7 @@ function confirmSubscription (opts) {
   let mailgun = new Mailgun({apiKey: apiKey, domain: domain});
   let members = [{address: opts.email}];
 
-  let newsletterList = mailgun.lists(config.mailgun.newsletterEmail);
+  let newsletterList = mailgun.lists(_mailgun.newsletterEmail);
 
   return new Promise(function(resolve, reject) {
     newsletterList.members().add({members: members, subscribed: true}, function (error, res) {
@@ -86,6 +86,9 @@ function confirmSubscription (opts) {
 }
 
 
-module.exports.sendEmail = sendEmail;
-module.exports.subscribe = subscribe;
-module.exports.confirmSubscription = confirmSubscription;
+const _sendEmail = sendEmail;
+export { _sendEmail as sendEmail };
+const _subscribe = subscribe;
+export { _subscribe as subscribe };
+const _confirmSubscription = confirmSubscription;
+export { _confirmSubscription as confirmSubscription };

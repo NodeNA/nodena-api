@@ -1,6 +1,6 @@
-const crypto = require('crypto');
-const moment = require('moment');
-const _ = require('lodash');
+import { createHash } from 'crypto';
+import moment from 'moment';
+import _ from 'lodash';
 
 /**
  * parses date
@@ -24,7 +24,7 @@ function gravatar (email, size, context) {
     return 'https://gravatar.com/avatar/?s=' + size + '&d=retro';
   }
 
-  let md5 = crypto.createHash('md5').update(email);
+  let md5 = createHash('md5').update(email);
 
   return 'https://gravatar.com/avatar/' + md5.digest('hex').toString() + '?s=' + size + '&d=retro';
 }
