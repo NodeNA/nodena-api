@@ -1,29 +1,35 @@
+import app from "./app.js";
 import { config } from "dotenv";
+import consola from "consola";
 
 process.on("uncaughtException", (err) => {
-  console.log("UNCAUGHT EXCEPTION! Shutting down...");
-  console.log(err.name, err.message);
+  consola.error("UNCAUGHT EXCEPTION! Shutting down...");
+  consola.info(err.name, err.message);
   process.exit(1);
 });
 
 config({ path: "./config.env" });
 
-const port = process.env.NODE_ENV === "production" ? process.env.PORT : 8000;
+/** PORT */
+const port = process.env.NODE_ENV === "production" ? process.env.PORT : 8080;
+app.set("port", port);
 
-const server = App.listen(port, () => {
-  console.log(`App running on port ${port}...`);
+
+const server = app.listen(port, () => {
+  consola.info(`App running on port ${port}...`);
 });
 
-process.on("unhandledRejection", (err) => {
-  console.log(err.name, err.message);
+/** HANDLE UNHANDLED REJECTION */
+process.on("unhandledRejection", err => {
+  consola.error(err.name, err.message);
   server.close(() => {
     process.exit(1);
   });
 });
 
 process.on("SIGTERM", () => {
-  console.log("SIGTERM RECEIVED. Shutting down gracefully");
+  consola.error("SIGTERM RECEIVED. Shutting down gracefully");
   server.close(() => {
-    console.log("Process terminated!");
+    consola.info("PROCESS TERMINATED!");
   });
 });

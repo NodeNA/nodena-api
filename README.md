@@ -10,21 +10,21 @@ NodeNA, is a platform that aims to make it easy to find inormation about Node.js
 
 ### Development
 
-1. get clone https://github.com/NodeNA/nodena-api
+1. get clone https://github.com/NodeNA/nodena-api.git
 2. cd nodena-api && npm install 
 3. npm run setup
 4. npm run migrate
 5. npm run dev
 
 ### Staging
-  1. git clone https://github.com/NodeNA/nodena-api
+  1. git clone https://github.com/NodeNA/nodena-api.git
   2. cd nodena-api && npm install
   3. export NODE_ENV=staging && npm run setup pg/mysql
   4. npm run migrate
   5. npm run staging
 
 ### Production
-  1. git clone https://github.com/NodeNA/nodena-api
+  1. git clone https://github.com/NodeNA/nodena-api.git
   2. cd nodena-api && npm install
   3. export NODE_ENV=production && npm run setup pg/mysql
   4. npm run migrate

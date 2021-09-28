@@ -9,8 +9,8 @@ import compression from "compression";
 import cors from "cors";
 
 // IMPORTS  ROUTES
-import AppError from "./utils/appError.js";
-import globalErrorHandler from "./utils/errors.js";
+import AppError from "./core/utils/appError.js";
+import globalErrorHandler from "./core/utils/errors.js";
 
 const app = express();
 

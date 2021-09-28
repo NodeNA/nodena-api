@@ -1,4 +1,4 @@
-import config from "./config";
+import config from "./core/config";
 
 module.exports = {
 
@@ -10,10 +10,10 @@ module.exports = {
     useNullAsDefault: true,
     migrations: {
       tableName: 'knex_migrations',
-      directory: __dirname + '/data/db/migrations'
+      directory: __dirname + '/core/data/db/migrations'
     },
     seeds: {
-      directory: __dirname + '/data/db/seeds/testing'
+      directory: __dirname + '/core/data/db/seeds/testing'
     }
   },
 
@@ -27,7 +27,7 @@ module.exports = {
     },
     migrations: {
       tableName: 'knex_migrations',
-      directory: __dirname + '/data/db/migrations'
+      directory: __dirname + '/core/data/db/migrations'
     },
 
     useNullAsDefault: true
@@ -43,7 +43,7 @@ module.exports = {
     },
     migrations: {
       tableName: 'knex_migrations',
-      directory: __dirname + '/data/db/migrations'
+      directory: __dirname + '/core/data/db/migrations'
     },
     useNullAsDefault: true
   }

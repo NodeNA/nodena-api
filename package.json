@@ -6,14 +6,12 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "migrate": "knex migrate:latest && knex seed:run",
-    "start": "export NODE_ENV=staging && nodemon server.js",
-    "debug": "export NODE_ENV=staging && node --inspect server.js",
-    "production": "export NODE_ENV=production && pm2 start server.js --name='NodeNA'",
-    "dev": "export NODE_ENV=development && nodemon",
-    "staging": "export NODE_ENV=staging && nodemon",
+    "start": "export NODE_ENV=staging && node server.js",
+    "dev": "export NODE_ENV=development && nodemon server.js",
+    "start:prod": "export NODE_ENV=production & nodemon server.js --name='NodeNA'",
+    "staging": "export NODE_ENV=staging && nodemon server.js",
     "test": "export NODE_ENV=testing && ./node_modules/mocha/bin/mocha test",
-    "setup": "node db/init.js",
+    "migrate": "knex migrate:latest && knex seed:run",
     "postmerge": "npm install"
   },
   "repository": {
@@ -44,6 +42,7 @@
     "bookshelf-relations": "^2.2.0",
     "brute-knex": "^4.0.1",
     "compression": "^1.7.4",
+    "consola": "^2.15.3",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "dateformat": "^5.0.1",
