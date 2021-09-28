@@ -7,8 +7,11 @@ const markdown = require('markdown-it')();
 const _ = require('lodash');
 const moment = require('moment');
 
+let Post;
+let Posts;
 
-const Post = App.Model.extend({
+
+Post = bookshelf.Model.extend({
 
   tableName: 'posts',
 
@@ -18,10 +21,6 @@ const Post = App.Model.extend({
       return this.updateTags(model, attributes, options);
     }
   },
-
-
-  hasTimestamps: true,
-
 
   tags: function () {
     return this.belongsToMany('Tag');
@@ -237,4 +236,10 @@ const Post = App.Model.extend({
 
 });
 
-module.exports = App.addModel('Post', Post);
+
+Posts = bookshelf.Collection.extend({
+  model: Post,
+});
+
+export const Post = bookshelf.model("Post", Post);
+export const Posts = bookshelf.collection("Posts", Posts);

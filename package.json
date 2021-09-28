@@ -28,8 +28,7 @@
     "networking",
     "namibia",
     "developers",
-    "programmers",
-    "react"
+    "programmers"
   ],
   "author": "Geraldo Kandonga Fillipus",
   "license": "MIT",
@@ -40,11 +39,15 @@
   "dependencies": {
     "@sendgrid/mail": "^7.4.7",
     "bcrypt-nodejs": "^0.0.3",
+    "bluebird": "^3.7.2",
+    "bookshelf": "^1.2.0",
+    "bookshelf-relations": "^2.2.0",
     "brute-knex": "^4.0.1",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "dateformat": "^5.0.1",
+    "debug": "^4.3.2",
     "dotenv": "^10.0.0",
     "errorhandler": "^1.5.1",
     "express": "^4.17.1",
@@ -55,6 +58,7 @@
     "helmet": "^4.6.0",
     "hpp": "^0.2.3",
     "html-to-text": "^8.0.0",
+    "intl-messageformat": "^9.9.2",
     "joi": "^17.4.2",
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.95.11",
@@ -62,6 +66,8 @@
     "mailgun-js": "^0.22.0",
     "mime-types": "^2.1.32",
     "moment": "^2.29.1",
+    "moment-timezone": "^0.5.33",
+    "morgan": "^1.10.0",
     "mysql": "^2.18.1",
     "node-schedule": "^2.0.0",
     "nodemailer": "^6.6.5",
@@ -76,6 +82,7 @@
     "twitter": "^1.7.1",
     "type-is": "^1.6.18",
     "unidecode": "^0.1.8",
+    "uuid": "^8.3.2",
     "xss-clean": "^0.1.1"
   },
   "devDependencies": {

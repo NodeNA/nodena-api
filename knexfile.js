@@ -2,7 +2,6 @@ import config from "./config";
 
 module.exports = {
 
-
   testing: {
     client: 'sqlite3',
     connection: {
@@ -11,10 +10,10 @@ module.exports = {
     useNullAsDefault: true,
     migrations: {
       tableName: 'knex_migrations',
-      directory: __dirname + '/db/migrations'
+      directory: __dirname + '/data/db/migrations'
     },
     seeds: {
-      directory: __dirname + '/db/seeds/testing'
+      directory: __dirname + '/data/db/seeds/testing'
     }
   },
 
@@ -28,7 +27,7 @@ module.exports = {
     },
     migrations: {
       tableName: 'knex_migrations',
-      directory: __dirname + '/db/migrations'
+      directory: __dirname + '/data/db/migrations'
     },
 
     useNullAsDefault: true
@@ -44,7 +43,7 @@ module.exports = {
     },
     migrations: {
       tableName: 'knex_migrations',
-      directory: __dirname + '/db/migrations'
+      directory: __dirname + '/data/db/migrations'
     },
     useNullAsDefault: true
   }

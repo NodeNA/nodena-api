@@ -1,10 +1,11 @@
+import bookshelf from "./base";
+let ResetLog;
 
-
-const ResetLog = App.Model.extend({
+ResetLog = bookshelf.Model.extend({
   tableName = "reset_logs",
 
   hasTimestamps: true,
 });
 
 
-export default App.addModel('ResetLog', ResetLog);
+export default bookshelf.model('ResetLog', ResetLog);

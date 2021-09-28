@@ -1,13 +1,9 @@
-const App = require('widget-cms');
+import nodenaBookshelf from './base';
+let Token;
 
-
-const Token = App.Model.extend({
+Token = nodenaBookshelf.Model.extend({
 
   tableName: 'tokens',
-
-
-  hasTimestamps: false,
-
 
   /*
    * delete post
@@ -20,8 +16,7 @@ const Token = App.Model.extend({
     });
   }
 
-
 });
 
 
-module.exports = App.addModel('Token', Token);
+export default nodenaBookshelf.model('Token', Token);

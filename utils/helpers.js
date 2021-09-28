@@ -28,3 +28,9 @@ function gravatar (email, size, context) {
 
   return 'https://gravatar.com/avatar/' + md5.digest('hex').toString() + '?s=' + size + '&d=retro';
 }
+
+module.exports = {
+  parseTime,
+  parseDate,
+  gravatar
+}

@@ -1,13 +1,15 @@
-const App = require('widget-cms');
-const moment = require('moment');
+
+import moment from 'moment';
 const markdown = require('markdown-it')();
-const _ = require('lodash');
+import _ from 'lodash';
+import bookshelf from './base';
 
+let Event;
+let Events
 
-const nodeEvent = App.Model.extend({
+Event = bookshelf.Model.extend({
 
   tableName: 'events',
-
 
   hasTimestamps: true,
 
@@ -61,5 +63,10 @@ const nodeEvent = App.Model.extend({
 });
 
 
+const Events = bookshelf.Collection.extend({
+  model: Event
+});
 
-module.exports = App.addModel('Event', nodeEvent);
+
+export const Event = bookshelf.model('Event', Event);
+export const Events = bookshelf.collection('Events', Events);

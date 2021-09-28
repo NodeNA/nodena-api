@@ -1,9 +1,10 @@
-import { Model, addModel } from '../core';
+import bookshelf from "./base";
 
-const Image = Model.extend({
+let Image;
+
+Image = bookshelf.Model.extend({
   tableName: 'images',
   hasTimestamps: true,
-
 
   saving: function (model, attr, options) {
     // if is new or slug has changed and has slug field - generate new slug
@@ -20,4 +21,5 @@ const Image = Model.extend({
 
 });
 
-export default addModel('Image', Image);
+export default Image = bookshelf.model('Image', Image);
+

@@ -1,9 +1,11 @@
-import { Model, addModel } from '../core';
+import bookshelf from "./base";
 import _ from 'lodash';
 
-const Meetup =  Model.extend({
+let Meetup;
+let Meetups;
+
+Meetup =  bookshelf.Model.extend({
   tableName: 'meetups',
-  hasTimestamps: true,
 
   saving: function (model, attr, options) {
 
@@ -31,4 +33,9 @@ const Meetup =  Model.extend({
 
 });
 
-export default addModel('Meetup', Meetup);
+Meetups = bookshelf.Collection.extend({
+  model: Meetup
+})
+
+export default Meetup = bookshelf.model('Meetup', Meetup);
+export default Meetups = bookshelf.collection('Meetups', Meetups);

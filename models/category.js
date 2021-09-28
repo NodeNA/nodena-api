@@ -1,11 +1,11 @@
-const App = require('widget-cms');
+import bookshelf from "./base";
 
+let Category;
+let Categories;
 
-const Category =  App.Model.extend({
-
+const Category =  bookshelf.Model.extend({
 
   tableName: 'categories',
-
 
   saving: function (model, attr, options) {
     // if is new or slug has changed and has slug field - generate new slug
@@ -28,5 +28,9 @@ const Category =  App.Model.extend({
   }
 });
 
+Categories = bookshelf.Collection.extend({
+  model: Category
+})
 
-module.exports = App.addModel('Category', Category);
+export const Category = bookshelf.model('Category', Category);
+export const Categories = bookshelf.collection('Categories', Categories);

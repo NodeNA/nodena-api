@@ -1,11 +1,8 @@
+import nodenaBookshelf from './base';
+let UserEvent;
 
-
-const UserEvent = App.Model.extend({
+UserEvent = nodenaBookshelf.Model.extend({
   tableName = "user_events",
-
-
-  hasTimestamps: true,
 });
 
-
-export default App.addModel('UserEvent', UserEvent);
+export default nodenaBookshelf.model('UserEvent', UserEvent);

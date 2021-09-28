@@ -1,9 +1,7 @@
 import catchAsync from "../utils/catchAsync.js";
 import AppError from "../utils/appError.js";
 
-const App = require('../core');
-
-const LoginAttempt =  App.getModel('loginAttempt');
+import LoginAttempt from "../models/login-attempt";
 
 // - LOGIN PROTECT ROUTE
 export const loginProtect = catchAsync(async (req, res, next) => {

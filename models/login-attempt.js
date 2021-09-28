@@ -1,6 +1,8 @@
+import bookshelf from "./base";
 
+let LoginAttempt;
 
-const LoginAttempt =  App.Model.extend({
+LoginAttempt =  bookshelf.Model.extend({
 
   tableName: 'login_attempts',
 
@@ -8,4 +10,4 @@ const LoginAttempt =  App.Model.extend({
 
 });
 
-export default App.addModel('LoginAttempt', LoginAttempt);
+export default bookshelf.model('LoginAttempt', LoginAttempt);

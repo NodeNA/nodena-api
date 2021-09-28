@@ -1,5 +1,5 @@
-import { join } from "path";
-import express, { static } from "express";
+import path from "path";
+import express from 'express';
 import morgan from "morgan";
 import helmet from "helmet";
 import xss from "xss-clean";
@@ -8,17 +8,18 @@ import cookieParser from "cookie-parser";
 import compression from "compression";
 import cors from "cors";
 
-
 // IMPORTS  ROUTES
-import AppError from "./utils/appError";
-import globalErrorHandler from "./utils/errors";
+import AppError from "./utils/appError.js";
+import globalErrorHandler from "./utils/errors.js";
 
 const app = express();
 
 app.enable("trust proxy");
 
+const __dirname = path.resolve();
+
 app.set("view engine", "pug");
-app.set("views", join(__dirname, "views"));
+app.set("views", path.join(__dirname, "views"));
 
 // GLOBAL MIDDLEWARE
 
@@ -30,7 +31,8 @@ app.options("*", cors());
 // GLOBAL VARIABLES
 
 // Serving static files
-app.use(static(join(__dirname, "public")));
+// Serving static files
+app.use(express.static(path.join(__dirname, "public")));
 
 // SECURE HTTP
 app.use(helmet());

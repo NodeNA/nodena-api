@@ -8,8 +8,6 @@ process.on("uncaughtException", (err) => {
 
 config({ path: "./config.env" });
 
-// DATBASE CONFIG
-
 const port = process.env.NODE_ENV === "production" ? process.env.PORT : 8000;
 
 const server = App.listen(port, () => {

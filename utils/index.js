@@ -1,6 +1,12 @@
-import CatchAsync from "./catchAsync";
+import catchAsync from "./catchAsync.js";
+import appError from "./appError.js";
+import auth from "./auth.js";
+import multer from "./multer.js";
 
 
 export {
-  CatchAsync
+  catchAsync,
+  appError,
+  auth,
+  multer
 }
